@@ -1,0 +1,54 @@
+* {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+}
+
+.happy-content {
+  padding: 25px;
+}
+.workload-content {
+  padding: 25px;
+}
+.anxiety-content {
+  padding: 25px;
+}
+
+.give-score-happy-content {
+  padding: 25px;
+  display: flex;
+  gap: 60px;
+}
+.give-score-workload-content {
+  padding: 25px;
+  display: flex;
+  gap: 60px;
+}
+.give-score-anxiety-content {
+  padding: 25px;
+  display: flex;
+  gap: 60px;
+}
+
+.happy-score {
+  padding: 10px;
+}
+.workload-score {
+  padding: 10px;
+}
+.anxiety-score {
+  padding: 10px;
+}
+
+.happy-score:hover {
+  border-bottom: 2px solid black;
+}
+.workload-score:hover {
+  border-bottom: 2px solid black;
+}
+.anxiety-score:hover {
+  border-bottom: 2px solid black;
+}
