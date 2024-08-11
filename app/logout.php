@@ -1,8 +1,8 @@
 <?php
-
 session_start();
-$_SESSION = array();
+$_SESSION = [];
+session_unset();
 session_destroy();
-
-header("location: login.php");
+header("Location: ../student_staff/app/login.php");
 exit;
+?>

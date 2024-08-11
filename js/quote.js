@@ -12,7 +12,7 @@ const dayOfYear = Math.floor(diff / oneDay);
 //fetch the quotes
 const quotes = async () => {
   try {
-    const response = await fetch("../quotes.json");
+    const response = await fetch("../../student_staff/quotes.json");
     if (!response.ok) {
       throw new Error("Network response was not ok " + response.statusText);
     }

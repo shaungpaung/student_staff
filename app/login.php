@@ -1,3 +1,44 @@
+<?php
+session_start();
+include '/xampp/htdocs/student_staff/data/db.php';
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = htmlspecialchars($_POST['user_name']);
+    $password = htmlspecialchars($_POST['password']);
+
+    echo "Username: " . $username . "<br>";
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE user_name=?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+
+    echo "Number of rows returned: " . $result->num_rows . "<br>";
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $username;
+            header("Location: ../index.php");
+            exit();
+        } else {
+            // Invalid password
+            $error = "Invalid password";
+        }
+    } else {
+        // Invalid username
+        $error = "Invalid username";
+    }
+}
+
+if (!empty($error)) {
+    echo '<div class="alert alert-danger mt-3">' . $error . '</div>';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,27 +48,28 @@
     <title>Login Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-    body {
-        margin: 0;
-        padding: 0;
-        background-color: #eaeaea;
-        height: 100vh;
-    }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #eaeaea;
+            height: 100vh;
+            font-family: "Montserrat", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-style: normal;
+        }
 
-    #login-box {
-        margin-top: 120px;
-        max-width: 600px;
-        height: auto;
-        border: 1px solid #9c9c9c;
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 25px;
-    }
+        #login-box {
+            max-width: 600px;
+            border: 1px solid #9c9c9c;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 25px;
+        }
 
-    #register-link {
-        margin-top: 20px;
-        text-align: right;
-    }
+        #register-link {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -47,39 +89,14 @@
                         <input type="password" name="password" id="password" class="form-control" required>
                     </div>
                     <button type="submit" name="submit" class="btn btn-info btn-md">Submit</button>
+                    <div class="mb-1" id="register-link"><br> If you don't have already an account. <a
+                            href="../../student_staff/app/register.php">Create Account
+                            Here</a>
+                    </div>
                 </form>
-                <?php
-                include '/xampp/htdocs/student_staff/data/db.php';
-                $error = "";
-
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    $username = htmlspecialchars($_POST['user_name']);
-                    $password = htmlspecialchars($_POST['password']);
-
-                    $stmt = $conn->prepare("SELECT * FROM users WHERE user_name=?");
-                    $stmt->bind_param("s", $username);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-
-                    if ($result->num_rows == 1) {
-                        $row = $result->fetch_assoc();
-                        if ($password == $row['password']) {
-                            header("Location: ../index.html");
-                            exit();
-                        } else {
-                            $error = "Invalid password";
-                        }
-                    } else {
-                        $error = "Invalid username";
-                    }
-                }
-
-                if (!empty($error)) {
-                    echo '<div class="alert alert-danger mt-3">' . $error . '</div>';
-                }
-                ?>
             </div>
         </div>
+    </div>
     </div>
 
 </body>
