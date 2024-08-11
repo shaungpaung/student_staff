@@ -1,0 +1,17 @@
+* {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+}
+
+.quote-container {
+  border: 1px solid black;
+  max-width: 550px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 13px 13px black;
+  cursor: pointer;
+}
