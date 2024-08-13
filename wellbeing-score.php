@@ -1,13 +1,15 @@
-<!DOCTYPE html>
 <?php
 session_start();
 
-// Check if the user is logged in, if not redirect to login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-  header("Location: ../student_staff/app/login.php"); // Change this to your login page
+  header("Location: ../student_staff/app/login.php");
   exit;
 }
+//include '../student_staff/api/wellBeingAPI.php';
+
 ?>
+<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -19,6 +21,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="../student_staff/css/wellbeing-score.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <title>Document</title>
 </head>
 
@@ -58,7 +61,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
           ">
         <div class="happy-content">Your's hapiness card is here !</div>
         <img src="../student_staff/img/happy.png" alt="" style="width: 50px" />
-        <button id="happy-give-score-button" style="
+        <button type="submit" name="submit" id="happy-give-score-button" style="
               margin: 20px;
               border: 1px solid rgb(61, 60, 60);
               padding: 10px;
@@ -91,7 +94,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
           ">
         <p class="workload-content">Your's workload card is here !</p>
         <img src="../student_staff/img/working.png" alt="" style="width: 70px" />
-        <button id="workload-give-score-button" style="
+        <button type="submit" name="submit" id="workload-give-score-button" style="
               margin: 20px;
               border: 1px solid rgb(61, 60, 60);
               padding: 10px;
@@ -124,7 +127,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
           ">
         <p class="anxiety-content">Your's anxiety card is here !</p>
         <img src="../student_staff/img/anxiety.png" alt="" style="width: 80px" />
-        <button id="anxiety-give-score-button" style="
+        <button type="submit" name="submit" id="anxiety-give-score-button" style="
               margin: 20px;
               border: 1px solid rgb(61, 60, 60);
               padding: 10px;
@@ -135,10 +138,20 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
           Give score
         </button>
       </div>
+
     </div>
+
+  </div>
+  <div id="addScoreContainer">
+    <button type="submit" name="submit" id="add-scores-button"
+      style="margin: 20px; border: 1px solid rgb(61, 60, 60); padding: 10px; background: transparent; box-shadow: 5px 5px black; cursor: pointer;">
+      Add Scores
+    </button>
   </div>
   <div style="margin-top: 90px">
-    <h2 style="text-align: center;">---------- Made with love by Agga ----------</h3>
+    <h2 style="text-align: center;">---------- Made with love by <?php
+    echo $_SESSION['username']
+      ?> ----------</h3>
   </div>
   <script src="../student_staff/js/wellbeing-score.js"></script>
 </body>

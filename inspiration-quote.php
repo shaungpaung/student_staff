@@ -42,7 +42,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             </div>
         </div>
         <div style="margin-top: 70px">
-            <h2 style="text-align: center;">---------- Made with love by Agga ----------</h3>
+            <h2 style="text-align: center;">---------- Made with love by <?php
+            echo $_SESSION['username']
+                ?> ----------</h3>
         </div>
     </div>
     <script src="../student_staff/js/quote.js"></script>

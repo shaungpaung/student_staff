@@ -23,7 +23,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 <body>
   <h1 style="display: flex; justify-content: center; margin-top: 50px">
-    Agga's Application
+    <?php
+    echo $_SESSION['username']
+      ?>'s Application
   </h1>
   <div style="
         max-width: 80%;
@@ -78,7 +80,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
               box-shadow: 10px 10px black;
               border-radius: 9px;
             ">
-          <h1>Welcome Agga Myo</h1>
+          <h1>Welcome <?php
+          echo $_SESSION['username']
+            ?></h1>
           <p style="margin-top: 30px; font-size: larger">
             Please select the menu for the features of the application
           </p>
