@@ -1,9 +1,8 @@
 <?php
 session_start();
 
-// Check if the user is logged in, if not redirect to login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-  header("Location: ../student_staff/app/login.php"); // Change this to your login page
+  header("Location: ../student_staff/app/login.php");
   exit;
 }
 ?>
@@ -19,9 +18,20 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="../student_staff/css/style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
+  <button type="button" name="button" id="logout" style="
+              margin: 20px;
+              border: 1px solid rgb(61, 60, 60);
+              padding: 10px;
+              background: transparent;
+              box-shadow: 5px 5px black;
+              cursor: pointer;
+            ">
+    Logout
+  </button>
   <h1 style="display: flex; justify-content: center; margin-top: 50px">
     <?php
     echo $_SESSION['username']
@@ -90,11 +100,25 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         </div>
       </div>
       <div style="margin-top: 30px; display: flex; justify-content: center">
-        <img src="../img/mood.jpg" alt="" style="height: 250px" />
+        <img src="../student_staff/img/mood.jpg" alt="" style="height: 250px" />
       </div>
     </div>
   </div>
   <script src="../student_staff/js/script.js"></script>
+  <script>
+    $('#logout').on('click', function () {
+      $.ajax({
+        url: '../student_staff/app/logout.php',
+        type: 'POST',
+        success: function (response) {
+          window.location.href = '../student_staff/app/login.php';
+        },
+        error: function () {
+          alert('Logout failed!');
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

@@ -27,11 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../index.php");
             exit();
         } else {
-            // Invalid password
             $error = "Invalid password";
         }
     } else {
-        // Invalid username
         $error = "Invalid username";
     }
 }

@@ -1,12 +1,34 @@
 <?php
 session_start();
 
-// Check if the user is logged in, if not redirect to login page
+
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-  header("Location: ../student_staff/app/login.php"); // Change this to your login page
-  exit;
+  header("Location: ../student_staff/app/login.php");
 }
+include '../student_staff/data/db.php';
+
+$user_id = $_SESSION['user_id'];
+
+$query = "SELECT date, happiness, workload, anxiety FROM well_beings WHERE user_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$data = [];
+while ($row = $result->fetch_assoc()) {
+  $data[] = [
+    $row['date'],
+    (int) $row['happiness'],
+    (int) $row['workload'],
+    (int) $row['anxiety']
+  ];
+}
+
+$data_json = json_encode($data);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +58,63 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     </div>
   </div>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script src="../student_staff/js/dashboard.js"></script>
+  <script>
+    google.charts.load("current", {
+      packages: ["corechart"]
+    });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Days');
+      data.addColumn('number', 'Happiness');
+      data.addColumn('number', 'Workload');
+      data.addColumn('number', 'Anxiety');
+
+      var jsonData = <?php echo $data_json; ?>;
+
+      data.addRows(jsonData);
+
+      var options = {
+        title: 'Well Being Scores Data',
+        curveType: 'function',
+        legend: {
+          position: 'bottom'
+        },
+        hAxis: {
+          title: 'Date',
+          slantedText: true,
+          slantedTextAngle: 90,
+          textStyle: {
+            fontSize: 12,
+            fontName: 'Arial',
+            color: '#000000',
+            bold: true
+          },
+          titleTextStyle: {
+            fontSize: 14,
+            bold: true
+          },
+          viewWindow: {
+            min: [0, 0],
+            max: [data.getNumberOfRows(), 0]
+          }
+        },
+        vAxis: {
+          title: 'Scores'
+        },
+        chartArea: {
+          left: 80,
+          top: 50,
+          width: '80%',
+          height: '60%'
+        }
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('dashboard'));
+      chart.draw(data, options);
+    }
+  </script>
 </body>
 
 </html>

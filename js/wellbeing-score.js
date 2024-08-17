@@ -178,7 +178,6 @@ anxietyGiveScoreBtn.addEventListener("click", () => {
   }
 });
 
-// Add this code to handle the button click event
 document
   .getElementById("add-scores-button")
   .addEventListener("click", function () {
@@ -211,8 +210,8 @@ function updateWellbeingScore(type, score) {
           console.log("Failed to update record: " + result.message);
         }
       } catch (e) {
-        console.error("Error parsing JSON:", e);
-        console.error("Response:", response);
+        //console.error("Error parsing JSON:", e);
+        //console.error("Response:", response);
         console.log(
           "Failed to parse server response. Check console for details."
         );

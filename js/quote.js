@@ -6,10 +6,8 @@ const previousButton = document.getElementById("previous-button");
 const today = new Date();
 const startOfYear = new Date(today.getFullYear(), 0, 0);
 const diff = today - startOfYear;
-// Convert milliseconds to days
-const oneDay = 1000 * 60 * 60 * 24; // Milliseconds in one day
+const oneDay = 1000 * 60 * 60 * 24; 
 const dayOfYear = Math.floor(diff / oneDay);
-//fetch the quotes
 const quotes = async () => {
   try {
     const response = await fetch("../../student_staff/quotes.json");
@@ -24,7 +22,6 @@ const quotes = async () => {
 };
 quotes().then((data) => {
   const totalQuotes = data.quotes.length;
-  //find the quote by the day (algorithm)
   const quoteIndexToDisplay = dayOfYear % totalQuotes;
   let authorOfTheQuote = data.quotes[quoteIndexToDisplay].author;
   let theQuote = data.quotes[quoteIndexToDisplay].quote;
