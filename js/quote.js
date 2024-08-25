@@ -22,12 +22,18 @@ const quotes = async () => {
     console.error("Error fetching the JSON data: ", error);
   }
 };
+//store the fetched data
+const fetchedQuoteContents = [];
+let quoteIndexToDisplay;
+let theQuote;
+let authorOfTheQuote;
 quotes().then((data) => {
+  fetchedQuoteContents.push(...data.quotes);
   const totalQuotes = data.quotes.length;
   //find the quote by the day (algorithm)
-  const quoteIndexToDisplay = dayOfYear % totalQuotes;
-  let authorOfTheQuote = data.quotes[quoteIndexToDisplay].author;
-  let theQuote = data.quotes[quoteIndexToDisplay].quote;
+  quoteIndexToDisplay = dayOfYear % totalQuotes;
+  authorOfTheQuote = data.quotes[quoteIndexToDisplay].author;
+  theQuote = data.quotes[quoteIndexToDisplay].quote;
   let nextButonClickCounts = 0;
   let previousButtonClickCounts = 0;
   //next and back button of the quote
@@ -41,6 +47,19 @@ quotes().then((data) => {
       quoteAuthor.textContent = authorOfTheQuote;
     }
   });
+  nextButton.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowRight") {
+      nextButonClickCounts++;
+      if (quoteIndexToDisplay + nextButonClickCounts < totalQuotes) {
+        authorOfTheQuote =
+          data.quotes[quoteIndexToDisplay + nextButonClickCounts].author;
+        theQuote =
+          data.quotes[quoteIndexToDisplay + nextButonClickCounts].quote;
+        quoteContent.textContent = theQuote;
+        quoteAuthor.textContent = authorOfTheQuote;
+      }
+    }
+  });
   previousButton.addEventListener("click", () => {
     previousButtonClickCounts++;
     if (quoteIndexToDisplay - previousButtonClickCounts >= 0) {
@@ -52,6 +71,34 @@ quotes().then((data) => {
       quoteAuthor.textContent = authorOfTheQuote;
     }
   });
+  previousButton.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
+      previousButtonClickCounts++;
+      if (quoteIndexToDisplay - previousButtonClickCounts >= 0) {
+        authorOfTheQuote =
+          data.quotes[quoteIndexToDisplay - previousButtonClickCounts].author;
+        theQuote =
+          data.quotes[quoteIndexToDisplay - previousButtonClickCounts].quote;
+        quoteContent.textContent = theQuote;
+        quoteAuthor.textContent = authorOfTheQuote;
+      }
+    }
+  });
+
   quoteContent.textContent = theQuote;
   quoteAuthor.textContent = authorOfTheQuote;
+});
+
+//search input implementation
+const searchInput = document.getElementById("search-input");
+searchInput.addEventListener("input", (event) => {
+  fetchedQuoteContents.forEach((q) => {
+    if (q.quote.includes(event.target.value)) {
+      quoteIndexToDisplay = fetchedQuoteContents.indexOf(q);
+      authorOfTheQuote = q.author;
+      theQuote = q.quote;
+      quoteContent.textContent = theQuote;
+      quoteAuthor.textContent = authorOfTheQuote;
+    }
+  });
 });

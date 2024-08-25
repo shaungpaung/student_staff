@@ -52,3 +52,9 @@
 .anxiety-score:hover {
   border-bottom: 2px solid black;
 }
+
+@media (max-width: 600px) {
+  .mobile-margin {
+    margin-top: 40px;
+  }
+}

@@ -10,18 +10,17 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/quote.css" />
   </head>
   <body>
-    <h1 style="display: flex; justify-content: center; margin-top: 50px">
-      Agga's Application
-    </h1>
     <div
       style="
         max-width: 80%;
         margin: auto;
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-around;
-        margin-top: 80px;
+        margin-top: 30px;
         height: 100%;
       "
     >
@@ -48,19 +47,6 @@
           >
             <a href="/dashboard.html" style="padding: 15px">Dashboard</a>
           </li>
-          <li
-            style="
-              padding: 15px;
-              display: flex;
-              justify-content: center;
-              border-bottom: 2px solid;
-              border-radius: 10px;
-            "
-          >
-            <a href="/inspiration-quote.html" style="padding: 15px"
-              >Inspirational Quote</a
-            >
-          </li>
           <li style="padding: 15px; display: flex; justify-content: center">
             <a href="/wellbeing-score.html" style="padding: 15px"
               >Wellbeing Score</a
@@ -68,12 +54,14 @@
           </li>
         </ul>
       </div>
+
       <div style="height: 100%">
         <div
           style="
             border: 2px solid;
             height: 100%;
             margin: auto;
+            margin-top: 30px;
             border-radius: 9px;
           "
         >
@@ -88,14 +76,57 @@
             <p style="margin-top: 30px; font-size: larger">
               Please select the menu for the features of the application
             </p>
-            <p style="font-size: medium; margin-top: 20px">Have fun !</p>
           </div>
         </div>
-        <div style="margin-top: 30px; display: flex; justify-content: center">
-          <img src="../img/mood.jpg" alt="" style="height: 250px" />
+        <div>
+          <h1 style="display: flex; justify-content: center; margin-top: 50px">
+            Inspirational quote for the day
+          </h1>
+          <div class="search-container">
+            <input
+              type="text"
+              class="search-box"
+              placeholder="Search..."
+              id="search-input"
+              value=""
+            />
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              max-width: 100%;
+              margin: auto;
+              margin-top: 40px;
+            "
+          >
+            <div id="previous-button">
+              <img
+                src="../img/left.png"
+                alt=""
+                style="width: 80px; cursor: pointer"
+              />
+            </div>
+            <blockquote class="quote-container">
+              <div style="margin: 20px; font-size: 50px">"</div>
+              <p id="quote-content"></p>
+              <div style="margin: 20px; text-align: end; font-size: 50px">
+                "
+              </div>
+              <p id="quote-author"></p>
+            </blockquote>
+            <div id="next-button">
+              <img
+                src="../img/next.png"
+                alt=""
+                style="width: 80px; cursor: pointer"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <script src="script.js"></script>
+    <script src="../js/quote.js"></script>
   </body>
 </html>
