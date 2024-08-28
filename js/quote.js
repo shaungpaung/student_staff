@@ -10,17 +10,18 @@ const diff = today - startOfYear;
 const oneDay = 1000 * 60 * 60 * 24; // Milliseconds in one day
 const dayOfYear = Math.floor(diff / oneDay);
 //fetch the quotes
-const quotes = async () => {
-  try {
-    const response = await fetch("../quotes.json");
-    if (!response.ok) {
-      throw new Error("Network response was not ok " + response.statusText);
-    }
-    const quotesData = await response.json();
-    return quotesData;
-  } catch (error) {
-    console.error("Error fetching the JSON data: ", error);
-  }
+const quotes = () => {
+  return $.ajax({
+    url: "../../student_staff/quotes.json",
+    method: "GET",
+    dataType: "json",
+  })
+    .then((data) => {
+      return data;
+    })
+    .fail((jqXHR, textStatus, errorThrown) => {
+      console.error("Error fetching the JSON data: ", textStatus, errorThrown);
+    });
 };
 //store the fetched data
 const fetchedQuoteContents = [];
@@ -91,9 +92,15 @@ quotes().then((data) => {
 
 //search input implementation
 const searchInput = document.getElementById("search-input");
+
 searchInput.addEventListener("input", (event) => {
+  const searchTerm = event.target.value.toLowerCase();
+
   fetchedQuoteContents.forEach((q) => {
-    if (q.quote.includes(event.target.value)) {
+    if (
+      q.quote.toLowerCase().includes(searchTerm) ||
+      q.author.toLowerCase().includes(searchTerm)
+    ) {
       quoteIndexToDisplay = fetchedQuoteContents.indexOf(q);
       authorOfTheQuote = q.author;
       theQuote = q.quote;

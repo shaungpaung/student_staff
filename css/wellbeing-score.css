@@ -66,6 +66,12 @@
   justify-content: center;
 }
 
+.selected-score {
+  background-color: rgb(72, 240, 252);
+  border-radius: 50%;
+  font-weight: bold;
+}
+
 @media (max-width: 600px) {
   .mobile-margin {
     margin-top: 40px;

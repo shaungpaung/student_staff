@@ -27,6 +27,15 @@ happyGiveScoreBtn.addEventListener("click", () => {
     for (let i = 0; i < happyScores.length; i++) {
       happyScores[i].addEventListener("click", function () {
         selectedHappyScore = this.textContent;
+
+        // Remove the selected class from all scores
+        for (let j = 0; j < happyScores.length; j++) {
+          happyScores[j].classList.remove("selected-score");
+        }
+
+        // Add the selected class to the clicked score
+        this.classList.add("selected-score");
+
         switch (selectedHappyScore) {
           case "1":
             happyCondition.textContent = "I am sad";
@@ -47,7 +56,6 @@ happyGiveScoreBtn.addEventListener("click", () => {
       });
     }
 
-    // Confirm Score Click Event
     document
       .getElementById("confirm-give-score")
       .addEventListener("click", function () {
@@ -88,6 +96,15 @@ workloadGiveScoreBtn.addEventListener("click", () => {
     for (let i = 0; i < workloadScores.length; i++) {
       workloadScores[i].addEventListener("click", function () {
         selectedWorkloadScore = this.textContent;
+
+        // Remove the selected class from all scores
+        for (let j = 0; j < workloadScores.length; j++) {
+          workloadScores[j].classList.remove("selected-score");
+        }
+
+        // Add the selected class to the clicked score
+        this.classList.add("selected-score");
+
         switch (selectedWorkloadScore) {
           case "1":
             workloadCondition.textContent = "Bad";
@@ -108,7 +125,6 @@ workloadGiveScoreBtn.addEventListener("click", () => {
       });
     }
 
-    // Confirm Score Click Event
     document
       .getElementById("workload-confirm-give-score")
       .addEventListener("click", function () {
@@ -149,6 +165,15 @@ anxietyGiveScoreBtn.addEventListener("click", () => {
     for (let i = 0; i < anxietyScores.length; i++) {
       anxietyScores[i].addEventListener("click", function () {
         selectedAnxietyScore = this.textContent;
+
+        // Remove the selected class from all scores
+        for (let j = 0; j < anxietyScores.length; j++) {
+          anxietyScores[j].classList.remove("selected-score");
+        }
+
+        // Add the selected class to the clicked score
+        this.classList.add("selected-score");
+
         switch (selectedAnxietyScore) {
           case "1":
             anxietyCondition.textContent = "Bad";
@@ -169,7 +194,6 @@ anxietyGiveScoreBtn.addEventListener("click", () => {
       });
     }
 
-    // Confirm Score Click Event
     document
       .getElementById("anxiety-confirm-give-score")
       .addEventListener("click", function () {
@@ -178,6 +202,7 @@ anxietyGiveScoreBtn.addEventListener("click", () => {
   }
 });
 
+// Final Submit Button Click Event
 document
   .getElementById("add-scores-button")
   .addEventListener("click", function () {
@@ -194,7 +219,7 @@ function updateWellbeingScore(type, score) {
     anxiety: selectedAnxietyScore || 0,
   });
   $.ajax({
-    url: "../../student_staff/api/wellBeingAPI.php",
+    url: "../student_staff/api/wellBeingAPI.php",
     type: "POST",
     data: {
       happiness: selectedHappyScore || 0,
@@ -210,8 +235,6 @@ function updateWellbeingScore(type, score) {
           console.log("Failed to update record: " + result.message);
         }
       } catch (e) {
-        //console.error("Error parsing JSON:", e);
-        //console.error("Response:", response);
         console.log(
           "Failed to parse server response. Check console for details."
         );
