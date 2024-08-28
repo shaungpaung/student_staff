@@ -17,7 +17,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   <link
     href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="../student_staff/css/style.css" />
+  <link rel="stylesheet" href="../student_staff/css/quote.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -41,8 +41,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         max-width: 80%;
         margin: auto;
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-around;
-        margin-top: 80px;
+        margin-top: 30px;
         height: 100%;
       ">
     <!-- menubar -->

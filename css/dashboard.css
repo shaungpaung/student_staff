@@ -10,3 +10,9 @@
 #dashboard {
   margin-bottom: 200px;
 }
+
+@media (max-width: 600px) {
+  .mobile-margin {
+    margin-top: 50px;
+  }
+}

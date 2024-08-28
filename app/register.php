@@ -31,23 +31,64 @@
             text-align: center;
         }
     </style>
+    <script>
+        //  error notification handler
+        function showNotification(message, type = 'danger') {
+            const notificationDiv = document.getElementById('notification');
+            notificationDiv.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                </div>`;
+        }
+
+        function validateForm() {
+            const phoneNumber = document.getElementById('phone_number').value;
+            const password = document.getElementById('password').value;
+
+            // Check phone number is an integer 
+            if (!/^\d+$/.test(phoneNumber)) {
+                showNotification('Phone number must be an integer.');
+                return false;
+            }
+
+            // Check password length and show warning if exactly 8 characters
+            if (password.length === 8) {
+                showNotification('Password is exactly 8 characters long. Consider making it longer for better security.');
+                return false;
+            }
+
+            // Check password length
+            if (password.length < 8) {
+                showNotification('Password must be at least 8 characters long.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
 </head>
 
 <body>
-
     <div class="container h-100 d-flex justify-content-center align-items-center">
         <div class="col-md-6">
             <div id="login-box">
+                <!-- error notification -->
+                <div id="notification"></div>
                 <h3 class="text-center text-info mb-3">Login</h3>
-                <form action="../../student_staff/api/create_user.php" method="post" id="login-form" class="form">
+                <form action="../../student_staff/api/create_user.php" method="post" id="login-form" class="form"
+                    autocomplete="off" onsubmit="return validateForm(); ">
+                    <!-- user name -->
                     <div class="mb-1">
                         <label for="user_name" class="form-label text-info">Username:</label>
                         <input type="text" name="user_name" id="user_name" class="form-control text-info" required>
                     </div>
+                    <!-- password -->
                     <div class="mb-1">
                         <label for="password" class="form-label text-info">Password:</label>
                         <input type="password" name="password" id="password" class="form-control" required>
                     </div>
+                    <!-- user role -->
                     <div class="mb-1">
                         <label for="type" class="form-label text-info">Role</label>
                         <select class="form-select text-info" id="type" name="type" required>
@@ -55,16 +96,19 @@
                             <option value="staff" class="text-info">Staff</option>
                         </select>
                     </div>
+                    <!-- phone number -->
                     <div class="mb-1">
                         <label for="phone_number" class="form-label text-info">Phone Number:</label>
                         <input type="text" name="phone_number" id="phone_number" class="form-control text-info"
                             required>
                     </div>
+                    <!-- address -->
                     <div class="mb-1">
                         <label for="address" class="form-label text-info">Address:</label>
                         <input type="text" name="address" id="address" class="form-control text-info" required>
                     </div>
-                    <button type="submit" name="submit" class="btn btn-info btn-md">Submit</button>
+                    <!-- submit button -->
+                    <button type="submit" name="submit" class="btn btn-info btn-md mt-2">Submit</button>
                     <div class="mb-1" id="register-link"><br> If you have already an account. <a
                             href="../../student_staff/app/login.php">Login
                             Here</a>
